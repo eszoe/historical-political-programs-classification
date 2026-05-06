@@ -20,7 +20,3 @@ print("Merged columns:", len(corpus.columns))
 print("Merged rows:", len(corpus))
 
 corpus.to_csv(DATA_DIR / 'corpus_ger_cze.csv', index=False)
-
-
-
-
