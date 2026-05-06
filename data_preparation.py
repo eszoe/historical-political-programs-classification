@@ -2,8 +2,8 @@ import pandas as pd
 from pathlib import Path
 
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / 'data'
+BASE_DIR = Path.cwd()
+DATA_DIR = Path("data")
 
 cze = pd.read_excel(DATA_DIR / 'Habsburg_Cze_issues.xlsx')
 ger = pd.read_excel(DATA_DIR / 'Habsburg_Ger_issues.xlsx')
