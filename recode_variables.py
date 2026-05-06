@@ -1,8 +1,8 @@
 import pandas as pd
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / 'data'
+BASE_DIR = Path.cwd()
+DATA_DIR = Path('data')
 
 corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
 
