@@ -48,7 +48,7 @@ print(df.head())
 
 unique_docs = df["document_id"].unique()
 
-# Shuffle documents
+# Shuffle documents: take also into account that documents have different length
 
 random.seed(42)
 

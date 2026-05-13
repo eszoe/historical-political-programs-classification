@@ -7,7 +7,7 @@ DATA_DIR = Path('data')
 corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
 
 # Recoding variables names
-corpus['doc_title'] = corpus['Dokumentname']
+
 corpus['start'] = corpus['Anfang']
 corpus['end'] = corpus['Ende']
 corpus['sentence'] = corpus['Segment']
