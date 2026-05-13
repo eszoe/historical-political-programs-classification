@@ -2,30 +2,46 @@ import pandas as pd
 from pathlib import Path
 
 
-BASE_DIR = Path.cwd()
-DATA_DIR = Path('data')
+def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
+    """
+    Loads and merges HMD issue and document files into a single corpus.
 
-# 1) Merge German and Czech data
-cze_issues = pd.read_excel(DATA_DIR / 'HMD_Cze_issues.xlsx', engine='openpyxl')
-ger_issues = pd.read_excel(DATA_DIR / 'HMD_Ger_issues.xlsx', engine='openpyxl')
-ger_doc = pd.read_excel(DATA_DIR / 'HMD_Ger_doc.xlsx', engine='openpyxl')
-cze_doc = pd.read_excel(DATA_DIR / 'HMD_Cze_doc.xlsx', engine='openpyxl')
-jew_doc = pd.read_excel(DATA_DIR / 'HMD_Jew_doc.xlsx', engine='openpyxl')
+    Args:
+        data_dir: Path to the directory containing the Excel files.
 
-hmd_issues = pd.concat([ger_issues, cze_issues], axis=0, ignore_index=True)
+    Returns:
+        Merged DataFrame saved as corpus_ger_cze.csv
+    """
 
-hmd_issues['doc_title'] = hmd_issues['Dokumentname']
+    # 1. Load issue files
+    ger_issues = pd.read_excel(data_dir / 'HMD_Ger_issues.xlsx', engine='openpyxl')
+    cze_issues = pd.read_excel(data_dir / 'HMD_Cze_issues.xlsx', engine='openpyxl')
 
+    # 2. Load document metadata files
+    ger_doc = pd.read_excel(data_dir / 'HMD_Ger_doc.xlsx', engine='openpyxl')
+    cze_doc = pd.read_excel(data_dir / 'HMD_Cze_doc.xlsx', engine='openpyxl')
+    jew_doc = pd.read_excel(data_dir / 'HMD_Jew_doc.xlsx', engine='openpyxl')
 
-# 2) Merge with data on document type, year, party
-corpus = (
-    hmd_issues
-    .merge(ger_doc, on="doc_title", how="inner")
-    .merge(cze_doc, on="doc_title", how="inner")
-    .merge(jew_doc, on="doc_title", how="inner")
-)
+    # 3. Merge issue files
+    hmd_issues = pd.concat([ger_issues, cze_issues], axis=0, ignore_index=True)
+    hmd_issues['doc_title'] = hmd_issues['Dokumentname']
 
-numeric_cols = corpus.select_dtypes(include='number').columns
-corpus[numeric_cols] = corpus[numeric_cols].fillna(0)
+    # 4. Merge all doc metadata into one table
+    all_docs = pd.concat([ger_doc, cze_doc, jew_doc], axis=0, ignore_index=True)
+    all_docs = all_docs.drop_duplicates(subset='doc_title')  # safety check
 
-corpus.to_csv(DATA_DIR / 'corpus_ger_cze.csv', index=False)
+    # 5. Single left join: keeps all issues, adds metadata where available
+    corpus = hmd_issues.merge(all_docs, on='doc_title', how='left')
+
+    # 6. Fill numeric NaNs
+    numeric_cols = corpus.select_dtypes(include='number').columns
+    corpus[numeric_cols] = corpus[numeric_cols].fillna(0)
+
+    # 7. Save
+    output_path = data_dir / 'corpus_ger_cze.csv'
+    corpus.to_csv(output_path, index=False)
+    print(f"Corpus saved to {output_path} — shape: {corpus.shape}")
+
+    return corpus
+
+corpus = load_corpus(Path('data'))
