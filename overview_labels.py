@@ -2,56 +2,62 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-BASE_DIR = Path.cwd()
 DATA_DIR = Path('data')
+PLOTS_DIR = Path('plots')
+PLOTS_DIR.mkdir(exist_ok=True)  # create if doesn't exist
 
 corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
 
-# Categories with more than 40 observations
-sums = corpus.columns[5:].tolist()
-sums = corpus[sums].sum().astype(int)
 
-filtered = sums[
-    (sums >= 40)
-].sort_values(ascending=False)
+def get_category_counts(corpus: pd.DataFrame, min_count: int = 40) -> pd.DataFrame:
+    """
+    Selects directional category columns (_pos/_neg),
+    sums their occurrences, and filters by minimum count.
 
-result = filtered.reset_index()
-result.columns = ['Category', 'Count']
+    Args:
+        corpus:    the full dataframe
+        min_count: minimum number of observations to keep a category
 
-print("Category\tCount")
-for _, row in result.iterrows():
-    print(f"{row['Category']}\t{row['Count']}")
+    Returns:
+        DataFrame with columns ['Category', 'Count']
+    """
+    # Select columns by name pattern — robust to column order changes
+    category_cols = [
+        col for col in corpus.columns
+        if col.endswith('_pos') or col.endswith('_neg')
+    ]
+
+    counts = corpus[category_cols].sum().astype(int)
+
+    filtered = (
+        counts[counts >= min_count]
+        .sort_values(ascending=False)
+        .reset_index()
+    )
+    filtered.columns = ['Category', 'Count']
+
+    return filtered
 
 
-# Select only directional categories with more than 40 observations
-sums = corpus.columns[4:64].tolist()
-sums = corpus[sums].sum().astype(int)
+def plot_category_counts(result: pd.DataFrame, min_count: int = 40):
+    """
+    Plots a horizontal bar chart of category frequencies.
+    """
+    plt.figure(figsize=(10, 8))
+    plt.barh(result['Category'], result['Count'])
+    plt.xlabel('Count')
+    plt.ylabel('Category')
+    plt.title(f'Category Counts (>= {min_count})', fontsize=16)
+    plt.gca().invert_yaxis()
+    plt.tight_layout()
 
-filtered = sums[
-    (sums >= 40)
-].sort_values(ascending=False)
-
-result = filtered.reset_index()
-result.columns = ['Category', 'Count']
-
-print("Category\tCount")
-for _, row in result.iterrows():
-    print(f"{row['Category']}\t{row['Count']}")
+    save_path = PLOTS_DIR / 'category_counts.png'
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
+    print(f"Plot saved to {save_path}")
+    plt.show()
 
 
-# Barplot of category frequencies of positional categories
-plt.figure(figsize=(10, 8))
-
-plt.barh(result['Category'], result['Count'])
-
-plt.xlabel('Count')
-plt.ylabel('Category')
-plt.title('Category Counts (>= 40)', fontsize=16)
-
-plt.gca().invert_yaxis()
-
-plt.tight_layout()
-
-plt.savefig('category_counts.png', dpi=300, bbox_inches='tight')
-plt.show()
-
+# Run
+result = get_category_counts(corpus, min_count=40)
+print(result.to_string(index=False))
+plot_category_counts(result, min_count=40)
