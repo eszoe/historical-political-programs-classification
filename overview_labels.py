@@ -6,7 +6,7 @@ DATA_DIR = Path('data')
 PLOTS_DIR = Path('plots')
 PLOTS_DIR.mkdir(exist_ok=True)  # create if doesn't exist
 
-corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
+corpus_rec = pd.read_csv(DATA_DIR / 'corpus_rec.csv')
 
 
 def get_category_counts(corpus: pd.DataFrame, min_count: int = 40) -> pd.DataFrame:
@@ -58,6 +58,6 @@ def plot_category_counts(result: pd.DataFrame, min_count: int = 40):
 
 
 # Run
-result = get_category_counts(corpus, min_count=40)
+result = get_category_counts(corpus_rec, min_count=40)
 print(result.to_string(index=False))
 plot_category_counts(result, min_count=40)

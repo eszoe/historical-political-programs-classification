@@ -12,7 +12,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     and combined (topic-level) columns, and returns a clean subset.
     """
 
-    #  Basic columns 
+    #  Basic columns
     corpus['start']    = corpus['Anfang']
     corpus['end']      = corpus['Ende']
     corpus['sentence'] = corpus['Segment']
