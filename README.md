@@ -11,21 +11,17 @@ As our training corpus, we use the Habsburg Manifesto Dataset, which contains el
 ### 1) Data preparation
 - merge German and Czech data (DONE)
 - clean category names (DONE)
-- add party names and maybe party families (TO DO)
-- selection of categories:
-  - most frequent categories (DONE)
-  - categories related to the overarching topics of nationalism, democratization, class conflict (TO DO)
-  - How to address skewed distribution of the top 15 categories? (TO DO: weighted loss, oversampling?)
-  - categories, party names, documents (=political programs) most likely need numeric IDs (TO DO)
+- add party names (DONE)
+- identify the most frequent categories (= categories with at least 40 observations) (DONE)
+
 
 ### 2) Setting up the train and the test dataset
+# Even though that we a have a skewed distribution of categories, we apply the model.
+- create labels
 - mapping with own labels
 - when splitting the dataset, the dataset shouldn't be split at the level of sentences but on the level of documents: 
 train_docs, test_docs = train_test_split(documents) otherwise: context leakage
 train_sentences = expand(train_docs)
 test_sentences = expand(test_docs)
-- or maybe train on some parties and test on others?
-- or maybe train on older programs and test on newer ones?
-- apparently tokenization takes place after splitting the dataset?
-- Huggingface
-- PyTorch format
+- probably we need ids for documents too
+
