@@ -1,15 +1,22 @@
-from transformers import TrainingArguments, Trainer
+from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
 from sklearn.metrics import f1_score
 import numpy as np
 
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return {
-        "macro_f1": f1_score(labels, predictions, average="macro"),
-        "weighted_f1": f1_score(labels, predictions, average="weighted")
-    }
+# Load model
+model_name = (
+    "manifesto-project/"
+    "manifestoberta-xlm-roberta-56policy-topics-sentence-2023-1-1"
+)
 
+model = AutoModelForSequenceClassification.from_pretrained(
+    model_name,
+    num_labels=len(label2id),
+    id2label=id2label,
+    label2id=label2id,
+    ignore_mismatched_sizes=True
+)
+
+# Training arguments
 training_args = TrainingArguments(
     output_dir="./results",
     num_train_epochs=3,
@@ -24,6 +31,16 @@ training_args = TrainingArguments(
     greater_is_better=True,
 )
 
+# Metrics
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+    return {
+        "macro_f1": f1_score(labels, predictions, average="macro"),
+        "weighted_f1": f1_score(labels, predictions, average="weighted")
+    }
+
+# Trainer
 trainer = Trainer(
     model=model,
     args=training_args,
