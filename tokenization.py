@@ -37,6 +37,8 @@ id2label      = {idx: label for label, idx in label2id.items()}
 print("\nLABEL2ID:")
 print(label2id)
 
+
+
 # 6. Convert labels to integers
 df['labels'] = df['label'].map(label2id)
 
@@ -52,7 +54,7 @@ tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-large")
 
 # splitting documents
 
-unique_docs = corpus_rec["document_id"].unique()
+unique_docs = corpus_rec["doc_title"].unique()
 
 # Shuffle documents: take also into account that documents have different length
 
