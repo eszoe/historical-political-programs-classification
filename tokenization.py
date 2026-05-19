@@ -70,8 +70,8 @@ train_docs = unique_docs[:split_idx]
 test_docs = unique_docs[split_idx:]
 
 # Create train/test dataframes
-train_corpus_rec = [corpus_rec["document_id"].isin(train_docs)]
-test_corpus_rec = corpus_rec[corpus_rec["document_id"].isin(test_docs)]
+train_corpus_rec = [corpus_rec["doc_title"].isin(train_docs)]
+test_corpus_rec = corpus_rec[corpus_rec["doc_title"].isin(test_docs)]
 
 print("\nTRAIN SIZE:", len(train_corpus_rec))
 print("TEST SIZE:", len(test_corpus_rec))
