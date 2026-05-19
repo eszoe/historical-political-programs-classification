@@ -137,15 +137,11 @@ test_dataset.set_format("torch")
 # load model with own labels
 
 model = AutoModelForSequenceClassification.from_pretrained(
-
     model_name,
-
-    # Number of YOUR labels
-    num_labels=len(label2id),
-
-    # Your mappings
-    id2label=id2label,
-    label2id=label2id
+    num_labels=len(label2id), # number of our labels
+    id2label=id2label, # mapping of our label
+    label2id=label2id,
+    ignore_mismatched_sizes=True
 )
 
 # sanity check
