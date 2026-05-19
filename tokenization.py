@@ -148,3 +148,6 @@ model = AutoModelForSequenceClassification.from_pretrained(
 
 print("\nTOKENIZED EXAMPLE:")
 print(train_dataset[0])
+
+print("\nMODEL LABELS:")
+print(model.config.id2label)
