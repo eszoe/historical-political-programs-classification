@@ -74,3 +74,81 @@ test_df     = df[df["doc_title"].isin(test_docs)]
 
 print("\nTRAIN SIZE:", len(train_df))
 print("TEST SIZE:", len(test_df))
+
+
+# convert to Huggingface documents
+
+train_dataset = Dataset.from_pandas(train_df)
+test_dataset = Dataset.from_pandas(test_df)
+
+# tokenization (why after splitting??)
+
+def tokenize(batch):
+
+    return tokenizer(
+        batch["sentence"],
+
+        # ManifestoBERTa was fine-tuned with max_length=200
+        max_length=200,
+
+        # Pad all sequences to length 200
+        padding="max_length",
+
+        # Truncate long sentences
+        truncation=True
+    )
+
+# tokenize datasets
+
+train_dataset = train_dataset.map(
+    tokenize,
+    batched=True
+)
+
+test_dataset = test_dataset.map(
+    tokenize,
+    batched=True
+)
+
+
+# Remove unused columns and keep only:
+# - input_ids
+# - attention_mask
+# - labels
+
+columns_to_remove = [
+    col for col in train_dataset.column_names
+    if col not in [
+        "input_ids",
+        "attention_mask",
+        "labels"
+    ]
+]
+
+train_dataset = train_dataset.remove_columns(columns_to_remove)
+test_dataset = test_dataset.remove_columns(columns_to_remove)
+
+# set PyTorch format
+
+train_dataset.set_format("torch")
+test_dataset.set_format("torch")
+
+
+# load model with own labels
+
+model = AutoModelForSequenceClassification.from_pretrained(
+
+    model_name,
+
+    # Number of YOUR labels
+    num_labels=len(label2id),
+
+    # Your mappings
+    id2label=id2label,
+    label2id=label2id
+)
+
+# sanity check
+
+print("\nTOKENIZED EXAMPLE:")
+print(train_dataset[0])
