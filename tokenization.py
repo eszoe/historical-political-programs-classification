@@ -22,20 +22,19 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 # create label mappings, columns "label" still needs to be created
 
-unique_labels = sorted(df["label"].unique())
+# Step 1: get categories with >= 40 observations
+result = get_category_counts(corpus_rec, min_count=40)
+category_cols = result['Category'].tolist()
 
-label2id = {
-    label: idx
-    for idx, label in enumerate(unique_labels)
-}
+# Step 2: create label column
+corpus_rec['label'] = corpus_rec.apply(
+    lambda row: next((col for col in category_cols if row[col] == 1), None),
+    axis=1
+)
 
-id2label = {
-    idx: label
-    for label, idx in label2id.items()
-}
-
-print("\nLABEL2ID:")
-print(label2id)
+# Step 3: check
+print(corpus_rec['label'].value_counts())
+print(f"Unlabeled rows: {corpus_rec['label'].isna().sum()}")
 
 # converting labels to integers
 
