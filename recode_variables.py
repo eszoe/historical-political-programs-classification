@@ -182,7 +182,8 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
 
 corpus_rec = recode_corpus(corpus)
 print(f"Shape: {corpus_rec.shape}")
-print(corpus_rec.columns.tolist())
+print(corpus_rec.columns.tolist)
+corpus_rec.head()
 
 # Save with a new name
 corpus_rec.to_csv(DATA_DIR / 'corpus_rec.csv', index=False)

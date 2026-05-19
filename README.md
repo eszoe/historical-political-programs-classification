@@ -13,15 +13,20 @@ As our training corpus, we use the Habsburg Manifesto Dataset, which contains el
 - clean category names (DONE)
 - add party names (DONE)
 - identify the most frequent categories (= categories with at least 40 observations) (DONE)
-
+- add a dummy for language
 
 ### 2) Setting up the train and the test dataset
 # Even though that we a have a skewed distribution of categories, we apply the model.
 - create labels
 - mapping with own labels
-- when splitting the dataset, the dataset shouldn't be split at the level of sentences but on the level of documents: 
+- when splitting the dataset, the dataset shouldn't be split at the level of sentences but on the level of documents and the two languages: 
 train_docs, test_docs = train_test_split(documents) otherwise: context leakage
 train_sentences = expand(train_docs)
 test_sentences = expand(test_docs)
 - probably we need ids for documents too
 
+
+# References
+Burst, T., Lehmann, P., Franzmann, S., Al-Gaddooa, D., Ivanusch, C., Regel, S., Riethmüller, F., Weßels, B. and Zehnter, L., 2023. Manifestoberta (Version 56topics. sentence. 2023.1. 1).
+
+Szöcsik, E., Zuber, C.I. and Howe, P.J., 2024. Lipset and Rokkan’s missing case: Introducing the Habsburg Manifesto Dataset. Party Politics, 30(5), pp.949-962.

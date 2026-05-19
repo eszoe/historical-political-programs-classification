@@ -10,3 +10,5 @@ corpus_rec = recode_corpus(corpus)
 result = get_category_counts(corpus_rec, min_count=40)
 
 plot_category_counts(result, min_count=40)
+
+print(corpus_rec.head())
