@@ -50,3 +50,26 @@ model_name = (
 )
 tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-large")
 
+# splitting documents
+
+unique_docs = corpus_rec["document_id"].unique()
+
+# Shuffle documents: take also into account that documents have different length
+
+random.seed(42)
+
+unique_docs = list(unique_docs)
+random.shuffle(unique_docs)
+
+# 80/20 split
+split_idx = int(0.8 * len(unique_docs))
+
+train_docs = unique_docs[:split_idx]
+test_docs = unique_docs[split_idx:]
+
+# Create train/test dataframes
+train_corpus_rec = [corpus_rec["document_id"].isin(train_docs)]
+test_corpus_rec = corpus_rec[corpus_rec["document_id"].isin(test_docs)]
+
+print("\nTRAIN SIZE:", len(train_corpus_rec))
+print("TEST SIZE:", len(test_corpus_rec))
