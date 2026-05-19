@@ -72,5 +72,5 @@ test_docs = unique_docs[split_idx:]
 train_df    = df[df["doc_title"].isin(train_docs)]
 test_df     = df[df["doc_title"].isin(test_docs)]
 
-print("\nTRAIN SIZE:", len(train_corpus_rec))
-print("TEST SIZE:", len(test_corpus_rec))
+print("\nTRAIN SIZE:", len(train_df))
+print("TEST SIZE:", len(test_df))
