@@ -1,5 +1,7 @@
 import pandas as pd
 from pathlib import Path
+import warnings
+warnings.filterwarnings('ignore', category=pd.errors.PerformanceWarning)
 
 DATA_DIR = Path('data')
 
