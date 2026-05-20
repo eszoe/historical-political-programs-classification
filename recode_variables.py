@@ -114,9 +114,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     corpus['tra_rel_val'] = corpus['tra_rel_val_pos']+ corpus['tra_rel_val_neg']
     corpus['sep_ch_st']   = corpus['sep_ch_st_pos']  + corpus['sep_ch_st_neg']
     corpus['nation']      = corpus['nation_pos']     + corpus['nation_neg']
-    corpus['lang_right']  = (
-        corpus['lang_right_pos'] + corpus['lang_right_neg']
-    )
+    corpus['lang_right']  = corpus['lang_right_pos'] + corpus['lang_right_neg']
     corpus['group_rep']   = corpus['group_rep_pos']  + corpus['group_rep_neg']
     corpus['immig']       = corpus['immig_pos']      + corpus['immig_neg']
     corpus['agri']        = corpus['agri_pos']
