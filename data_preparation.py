@@ -24,7 +24,7 @@ def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
 
     # 3. Merge issue files
     hmd_issues = pd.concat([ger_issues, cze_issues], axis=0, ignore_index=True)
-    hmd_issues['doc_title'] = hmd_issues['Dokumentname']
+    hmd_issues = hmd_issues.rename(columns={'Dokumentname': 'doc_title'})
 
     # 4. Merge all doc metadata into one table
     all_docs = pd.concat([ger_doc, cze_doc, jew_doc], axis=0, ignore_index=True)
