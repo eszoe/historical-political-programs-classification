@@ -3,10 +3,6 @@ from pathlib import Path
 import warnings
 warnings.filterwarnings('ignore', category=pd.errors.PerformanceWarning)
 
-DATA_DIR = Path('data')
-
-corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
-
 
 def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     """
@@ -180,11 +176,17 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
 
     return corpus[cols].copy()
 
+if __name__ == '__main__':
 
-corpus_rec = recode_corpus(corpus)
-print(f"Shape: {corpus_rec.shape}")
-print(corpus_rec.columns.tolist())
-print(corpus_rec.head())
+    DATA_DIR = Path('data')
 
-# Save with a new name
-corpus_rec.to_csv(DATA_DIR / 'corpus_rec.csv', index=False)
+    corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
+
+    corpus_rec = recode_corpus(corpus)
+
+    print(f"Shape: {corpus_rec.shape}")
+    print(corpus_rec.columns.tolist())
+    print(corpus_rec.head())
+
+    # Save with a new name
+    corpus_rec.to_csv(DATA_DIR / 'corpus_rec.csv', index=False)
