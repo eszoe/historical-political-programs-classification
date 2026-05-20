@@ -9,7 +9,8 @@ corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
 def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     """
     Renames raw columns to short codes, creates directional (pos/neg)
-    and combined (topic-level) columns, and returns a clean subset.
+    and combined (topic-level) columns, drops non-relevant columns,
+    and returns a clean subset.
     """
 
     #  Basic columns
