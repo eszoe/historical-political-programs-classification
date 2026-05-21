@@ -4,7 +4,7 @@ from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from data_prep_load import load_corpus
 from data_prep_recode import recode_corpus
-from overview_labels import get_category_counts
+from label_counts import get_category_counts
 
 DATA_DIR = Path('data')
 
