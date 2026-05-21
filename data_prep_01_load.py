@@ -44,4 +44,5 @@ def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
 
     return corpus
 
-corpus = load_corpus(Path('data'))
+if __name__ == '__main__':
+    corpus = load_corpus(Path('data'))
