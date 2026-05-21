@@ -4,7 +4,7 @@ from datasets import Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from data_prep_load import load_corpus
 from data_prep_recode import recode_corpus
-from label_counts import get_category_counts
+from label_counts import get_frequent_label_counts
 
 DATA_DIR = Path('data')
 
@@ -13,7 +13,7 @@ corpus     = load_corpus(Path('data'))
 corpus_rec = recode_corpus(corpus)
 
 # 2. Get filtered category columns
-result        = get_category_counts(corpus_rec, min_count=40)
+result        = get_frequent_label_counts(corpus_rec, min_count=40)
 category_cols = result['Category'].tolist()
 
 # 3. Create label column
