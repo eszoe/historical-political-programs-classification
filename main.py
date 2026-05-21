@@ -15,5 +15,6 @@ print(freq_labels.to_string(index=False))
 print(f"Labels above threshold: {len(freq_labels)}")
 plot_label_counts(freq_labels, min_count=40)
 
+# Display dataset size if using only labels with at least 40 observations
 filtered_size = freq_labels['Count'].sum()
 print(f"Corpus size if ONLY keeping frequent labels: {filtered_size} sentences")
