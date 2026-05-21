@@ -1,6 +1,6 @@
 from pathlib import Path
-from data_prep_01_load import load_corpus
-from data_prep_02_recode import recode_corpus
+from data_prep_load import load_corpus
+from data_prep_recode import recode_corpus
 from overview_labels import get_category_counts, plot_category_counts
 
 corpus = load_corpus(Path('data'))
