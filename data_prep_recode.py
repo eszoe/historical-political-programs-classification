@@ -177,10 +177,10 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     return corpus[cols].copy()
 
 if __name__ == '__main__':
+    from data_prep_load import load_corpus
 
-    corpus = pd.read_csv(Path('data') / 'corpus_ger_cze.csv')
+    corpus = load_corpus(Path('data'))
     corpus_rec = recode_corpus(corpus)
 
     print(f"Shape: {corpus_rec.shape}")
-    print(corpus_rec.columns.tolist())
-    print(corpus_rec.head())
+    print(f"Columns: {corpus_rec.columns.tolist()}")
