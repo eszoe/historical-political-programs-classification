@@ -30,8 +30,8 @@ def tokenize(batch):
 def build_hf_dataset(df):
     """
     Convert a pandas DataFrame into a tokenized HuggingFace Dataset
-    keep_cols = ["input_ids", "attention_mask", "labels"]
     """
+    keep_cols = ["input_ids", "attention_mask", "labels"]
 
     dataset = Dataset.from_pandas(df)
     dataset = dataset.map(tokenize, batched=True)
