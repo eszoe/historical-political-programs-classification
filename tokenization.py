@@ -81,7 +81,7 @@ print("TEST SIZE:", len(test_df))
 train_dataset = Dataset.from_pandas(train_df)
 test_dataset = Dataset.from_pandas(test_df)
 
-# tokenization (why after splitting??)
+# tokenization
 
 def tokenize(batch):
 
