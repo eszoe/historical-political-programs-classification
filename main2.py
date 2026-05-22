@@ -17,7 +17,7 @@ def main():
 
     # ── 2. Filter categories ─────────────────────────────────────
     result        = get_frequent_label_counts(corpus_rec, min_count=40)
-    category_cols = result['Category'].tolist()
+    category_cols = result['Topic'].tolist()
 
     # ── 3. Create label column ───────────────────────────────────
     corpus_rec['label'] = corpus_rec.apply(
