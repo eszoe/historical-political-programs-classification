@@ -9,9 +9,9 @@ from transformers import (
     Trainer
 )
 from sklearn.metrics import f1_score
-from data_preparation import load_corpus
-from recode_variables import recode_corpus
-from overview_labels import get_category_counts
+from data_prep_load import load_corpus
+from data_prep_recode import recode_corpus
+from label_counts import get_frequent_label_counts
 
 DATA_DIR = Path('data')
 
@@ -20,7 +20,7 @@ corpus     = load_corpus(DATA_DIR)
 corpus_rec = recode_corpus(corpus)
 
 # ── 2. Get filtered categories ───────────────────────────────────
-result        = get_category_counts(corpus_rec, min_count=40)
+result        = get_frequent_label_counts(corpus_rec, min_count=40)
 category_cols = result['Category'].tolist()
 
 # ── 3. Create label column ───────────────────────────────────────

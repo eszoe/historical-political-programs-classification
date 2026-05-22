@@ -9,7 +9,7 @@ As our training corpus, we use the Habsburg Manifesto Dataset, which contains el
 ## Workflow
 
 ### 1) Data preparation
-- merge German and Czech data (DONE)
+- merge German and Czech data (sentences labeled by issue/topic), and their metadata (document title, year, party etc.)  -DONE
 - clean category names (DONE)
 - add party names (DONE)
 - identify the most frequent categories (= categories with at least 40 observations) (DONE)

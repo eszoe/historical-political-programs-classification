@@ -10,7 +10,7 @@ def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
         data_dir: Path to the directory containing the Excel files.
 
     Returns:
-        Merged DataFrame saved as corpus_ger_cze.csv
+        Merged DataFrame of issues with document metadata.
     """
 
     # 1. Load issue files
@@ -24,7 +24,7 @@ def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
 
     # 3. Merge issue files
     hmd_issues = pd.concat([ger_issues, cze_issues], axis=0, ignore_index=True)
-    hmd_issues['doc_title'] = hmd_issues['Dokumentname']
+    hmd_issues = hmd_issues.rename(columns={'Dokumentname': 'doc_title'})
 
     # 4. Merge all doc metadata into one table
     all_docs = pd.concat([ger_doc, cze_doc, jew_doc], axis=0, ignore_index=True)
@@ -37,11 +37,10 @@ def load_corpus(data_dir: Path = Path('data')) -> pd.DataFrame:
     numeric_cols = corpus.select_dtypes(include='number').columns
     corpus[numeric_cols] = corpus[numeric_cols].fillna(0)
 
-    # 7. Save
-    output_path = data_dir / 'corpus_ger_cze.csv'
-    corpus.to_csv(output_path, index=False)
-    print(f"Corpus saved to {output_path} — shape: {corpus.shape}")
-
     return corpus
 
-corpus = load_corpus(Path('data'))
+if __name__ == '__main__':
+    corpus = load_corpus(Path('data'))
+    print(f"Corpus shape: {corpus.shape}")
+    print(f"Columns: {corpus.columns.tolist()}")
+    print(f"Missing values:\n{corpus.isnull().sum()[corpus.isnull().sum() > 0]}")

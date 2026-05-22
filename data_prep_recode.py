@@ -1,15 +1,14 @@
 import pandas as pd
 from pathlib import Path
-
-DATA_DIR = Path('data')
-
-corpus = pd.read_csv(DATA_DIR / 'corpus_ger_cze.csv')
+import warnings
+warnings.filterwarnings('ignore', category=pd.errors.PerformanceWarning)
 
 
 def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     """
     Renames raw columns to short codes, creates directional (pos/neg)
-    and combined (topic-level) columns, and returns a clean subset.
+    and combined (topic-level) columns, drops non-relevant columns,
+    and returns a clean subset.
     """
 
     #  Basic columns
@@ -114,9 +113,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     corpus['tra_rel_val'] = corpus['tra_rel_val_pos']+ corpus['tra_rel_val_neg']
     corpus['sep_ch_st']   = corpus['sep_ch_st_pos']  + corpus['sep_ch_st_neg']
     corpus['nation']      = corpus['nation_pos']     + corpus['nation_neg']
-    corpus['lang_right']  = (
-        corpus['lang_right_pos'] + corpus['lang_right_neg']
-    )
+    corpus['lang_right']  = corpus['lang_right_pos'] + corpus['lang_right_neg']
     corpus['group_rep']   = corpus['group_rep_pos']  + corpus['group_rep_neg']
     corpus['immig']       = corpus['immig_pos']      + corpus['immig_neg']
     corpus['agri']        = corpus['agri_pos']
@@ -179,11 +176,11 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
 
     return corpus[cols].copy()
 
+if __name__ == '__main__':
+    from data_prep_load import load_corpus
 
-corpus_rec = recode_corpus(corpus)
-print(f"Shape: {corpus_rec.shape}")
-print(corpus_rec.columns.tolist)
-corpus_rec.head()
+    corpus = load_corpus(Path('data'))
+    corpus_rec = recode_corpus(corpus)
 
-# Save with a new name
-corpus_rec.to_csv(DATA_DIR / 'corpus_rec.csv', index=False)
+    print(f"Shape: {corpus_rec.shape}")
+    print(f"Columns: {corpus_rec.columns.tolist()}")
