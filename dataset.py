@@ -7,6 +7,8 @@ tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
 
 def split_by_document_and_language(df, train_ratio=0.8, seed=42):
     random.seed(seed)
+    train_parts = []
+    test_parts  = []
 
     for lang, lang_df in df.groupby("doc_lan"):
         unique_docs = lang_df["doc_title"].unique().tolist()
