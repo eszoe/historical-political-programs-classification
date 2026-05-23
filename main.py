@@ -27,7 +27,7 @@ def main():
 
     # ── 4. Drop unlabeled rows ───────────────────────────────────
     df = corpus_rec[corpus_rec['label'].notna()].copy()
-    df = df[['doc_title', 'sentence', 'label']].reset_index(drop=True)
+    df = df[['doc_lan', 'doc_title', 'sentence', 'label']].reset_index(drop=True)
 
     # ── 5. Label mappings ────────────────────────────────────────
     unique_labels = sorted(df['label'].unique())
