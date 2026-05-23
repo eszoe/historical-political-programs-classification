@@ -39,7 +39,7 @@ def main():
     print(f"Dataset size:     {len(df)}")
 
     # ── 6. Split and build datasets ──────────────────────────────
-    train_df, test_df = split_by_document(df)
+    train_df, test_df = split_by_document_and_language(df)
     print(f"Train size: {len(train_df)}")
     print(f"Test size:  {len(test_df)}")
 
