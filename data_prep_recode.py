@@ -7,8 +7,7 @@ warnings.filterwarnings('ignore', category=pd.errors.PerformanceWarning)
 def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     """
     Renames raw columns to short codes, creates directional (pos/neg)
-    and combined (topic-level) columns, drops non-relevant columns,
-    and returns a clean subset.
+    columns, drops non-relevant columns, and returns a clean subset.
     """
 
     #  Basic columns
@@ -81,44 +80,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
     corpus['agri_pos']        = corpus['agriculture pos']
     corpus['unemp_neg']       = corpus['unemployment neg']
 
-    # Combined topic columns (pos + neg merged)
-    corpus['milit']       = corpus['milit_pos']      + corpus['milit_neg']
-    corpus['conscrip']    = corpus['conscrip_pos']   + corpus['conscrip_neg']
-    corpus['cit_army']    = corpus['cit_army_pos']
-    corpus['democ']       = corpus['democ_pos']      + corpus['democ_neg']
-    corpus['elec_inc']    = corpus['elec_inc_pos']   + corpus['elec_inc_neg']
-    corpus['parl_aut']    = corpus['parl_aut_pos']
-    corpus['civ_lib']     = corpus['civ_lib_pos']    + corpus['civ_lib_neg']
-    corpus['rule_law']    = corpus['rule_law_pos']   + corpus['rule_law_neg']
-    corpus['spec_hun']    = corpus['spec_hun_pos']   + corpus['spec_hun_neg']
-    corpus['dec_fed']     = corpus['dec_fed_pos']    + corpus['dec_fed_neg']
-    corpus['sec']         = corpus['sec_pos']        + corpus['sec_neg']
-    corpus['capit']       = corpus['capit_pos']      + corpus['capit_neg']
-    corpus['free_trade']  = corpus['free_trade_pos'] + corpus['free_trade_neg']
-    corpus['exploit']     = corpus['exploit_neg']
-    corpus['growth']      = corpus['growth_pos']     + corpus['growth_neg']
-    corpus['pub_debt']    = corpus['pub_debt_neg']
-    corpus['int_rate']    = corpus['int_rate_pos']   + corpus['int_rate_neg']
-    corpus['tax']         = corpus['tax_pos']        + corpus['tax_neg']
-    corpus['corpor']      = corpus['corpor_pos']
-    corpus['coop']        = corpus['coop_pos']       + corpus['coop_neg']
-    corpus['trade_uni']   = corpus['trade_uni_pos']
-    corpus['pub_infra']   = corpus['pub_infra_pos']
-    corpus['soc_eq']      = corpus['soc_eq_pos']     + corpus['soc_eq_neg']
-    corpus['soc_sec']     = corpus['soc_sec_pos']    + corpus['soc_sec_neg']
-    corpus['pub_heal']    = corpus['pub_heal_pos']
-    corpus['pub_educ']    = corpus['pub_educ_pos']
-    corpus['pub_sub']     = corpus['pub_sub_pos']    + corpus['pub_sub_neg']
-    corpus['class_conf']  = corpus['class_conf_pos'] + corpus['class_conf_neg']
-    corpus['tra_rel_val'] = corpus['tra_rel_val_pos']+ corpus['tra_rel_val_neg']
-    corpus['sep_ch_st']   = corpus['sep_ch_st_pos']  + corpus['sep_ch_st_neg']
-    corpus['nation']      = corpus['nation_pos']     + corpus['nation_neg']
-    corpus['lang_right']  = corpus['lang_right_pos'] + corpus['lang_right_neg']
-    corpus['group_rep']   = corpus['group_rep_pos']  + corpus['group_rep_neg']
-    corpus['immig']       = corpus['immig_pos']      + corpus['immig_neg']
-    corpus['agri']        = corpus['agri_pos']
-    corpus['unemp']       = corpus['unemp_neg']
-    corpus['oth_issue']   = corpus['Other issue']
+    corpus['oth_issue']       = corpus['Other issue']
 
     #  Select final columns
     cols = [
@@ -159,14 +121,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
         'immig_pos', 'immig_neg',
         'agri_pos',
         'unemp_neg',
-        'milit', 'conscrip', 'cit_army', 'democ', 'elec_inc',
-        'parl_aut', 'civ_lib', 'rule_law', 'spec_hun', 'dec_fed',
-        'sec', 'capit', 'free_trade', 'exploit', 'growth',
-        'pub_debt', 'int_rate', 'tax', 'corpor', 'coop',
-        'trade_uni', 'pub_infra', 'soc_eq', 'soc_sec',
-        'pub_heal', 'pub_educ', 'pub_sub', 'class_conf',
-        'tra_rel_val', 'sep_ch_st', 'nation', 'lang_right',
-        'group_rep', 'immig', 'agri', 'unemp', 'oth_issue'
+        'oth_issue'
     ]
 
     # Safety check — warn if any expected column is missing

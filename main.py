@@ -2,7 +2,7 @@ from pathlib import Path
 from data_prep_load import load_corpus
 from data_prep_recode import recode_corpus
 from label_counts import get_frequent_label_counts
-from dataset import split_by_document, build_hf_dataset
+from dataset import split_by_document_and_language, build_hf_dataset
 from model import load_model
 from metrics import compute_metrics
 from train import get_training_args, build_trainer
@@ -39,7 +39,7 @@ def main():
     print(f"Dataset size:     {len(df)}")
 
     # ── 6. Split and build datasets ──────────────────────────────
-    train_df, test_df = split_by_document(df)
+    train_df, test_df = split_by_document_and_language(df)
     print(f"Train size: {len(train_df)}")
     print(f"Test size:  {len(test_df)}")
 
