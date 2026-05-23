@@ -5,10 +5,12 @@ from transformers import AutoTokenizer
 TOKENIZER_NAME = "xlm-roberta-large"
 tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
 
-def split_by_document(df, train_ratio=0.8, seed=42):
-    unique_docs = df["doc_title"].unique().tolist()
+def split_by_document_and_language(df, train_ratio=0.8, seed=42):
     random.seed(seed)
-    random.shuffle(unique_docs)
+
+    for lang, lang_df in df.groupby("doc_lan"):
+        unique_docs = lang_df["doc_title"].unique().tolist()
+        random.shuffle(unique_docs)
 
     split_idx  = int(train_ratio * len(unique_docs))
     train_docs = unique_docs[:split_idx]
