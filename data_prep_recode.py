@@ -121,14 +121,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
         'immig_pos', 'immig_neg',
         'agri_pos',
         'unemp_neg',
-        'milit', 'conscrip', 'cit_army', 'democ', 'elec_inc',
-        'parl_aut', 'civ_lib', 'rule_law', 'spec_hun', 'dec_fed',
-        'sec', 'capit', 'free_trade', 'exploit', 'growth',
-        'pub_debt', 'int_rate', 'tax', 'corpor', 'coop',
-        'trade_uni', 'pub_infra', 'soc_eq', 'soc_sec',
-        'pub_heal', 'pub_educ', 'pub_sub', 'class_conf',
-        'tra_rel_val', 'sep_ch_st', 'nation', 'lang_right',
-        'group_rep', 'immig', 'agri', 'unemp', 'oth_issue'
+        'oth_issue'
     ]
 
     # Safety check — warn if any expected column is missing
