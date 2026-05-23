@@ -122,7 +122,7 @@ def recode_corpus(corpus: pd.DataFrame) -> pd.DataFrame:
 
     #  Select final columns
     cols = [
-        'doc_title', 'start', 'end', 'sentence',
+        'doc_lan', 'doc_title', 'start', 'end', 'sentence',
         'milit_pos', 'milit_neg',
         'conscrip_pos', 'conscrip_neg',
         'cit_army_pos',
