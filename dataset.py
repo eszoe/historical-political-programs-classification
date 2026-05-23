@@ -12,12 +12,15 @@ def split_by_document_and_language(df, train_ratio=0.8, seed=42):
         unique_docs = lang_df["doc_title"].unique().tolist()
         random.shuffle(unique_docs)
 
-    split_idx  = int(train_ratio * len(unique_docs))
-    train_docs = unique_docs[:split_idx]
-    test_docs  = unique_docs[split_idx:]
+        split_idx  = int(train_ratio * len(unique_docs))
+        train_docs = unique_docs[:split_idx]
+        test_docs  = unique_docs[split_idx:]
+        
+        train_parts.append(lang_df[lang_df["doc_title"].isin(train_docs)])
+        test_parts.append(lang_df[lang_df["doc_title"].isin(test_docs)])
 
-    train_df = df[df["doc_title"].isin(train_docs)].reset_index(drop=True)
-    test_df  = df[df["doc_title"].isin(test_docs)].reset_index(drop=True)
+    train_df = pd.concat(train_parts).reset_index(drop=True)
+    test_df  = pd.concat(test_parts).reset_index(drop=True)
 
     return train_df, test_df
 
