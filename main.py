@@ -3,12 +3,22 @@ from data_prep_load import load_corpus
 from data_prep_recode import recode_corpus
 from label_counts import get_frequent_label_counts
 from dataset import split_by_document_and_language, build_hf_dataset
-from model import load_model
+from model import load_model, get_model
 from metrics import compute_metrics
-from train import get_training_args, build_trainer
+from train_frozen import build_trainer_frozen
+from train_lora import build_trainer_lora
 from evaluate import run_evaluation
 
 DATA_DIR = Path('data')
+
+
+def run_experiment(model, build_trainer_fn, output_dir, train_dataset, test_dataset, id2label):
+    trainer = build_trainer_fn(model, train_dataset, test_dataset, compute_metrics)
+    trainer.train()
+    run_evaluation(trainer, test_dataset, id2label)
+    model.save_pretrained(output_dir)
+    print(f"Model saved to {output_dir}")
+
 
 def main():
     # ── 1. Load and recode ───────────────────────────────────────
@@ -46,22 +56,34 @@ def main():
     train_dataset = build_hf_dataset(train_df)
     test_dataset  = build_hf_dataset(test_df)
 
-    # ── 7. Load model ────────────────────────────────────────────
-    model = load_model(label2id, id2label)
-
-    # ── 8. Train ─────────────────────────────────────────────────
-    training_args = get_training_args()
-    trainer       = build_trainer(
-        model, training_args, train_dataset, test_dataset, compute_metrics
+    # ── 7. Experiment A: Frozen layers ───────────────────────────
+    print("\n" + "="*50)
+    print("EXPERIMENT A: Partially frozen layers")
+    print("="*50)
+    model_frozen = load_model(label2id, id2label)
+    run_experiment(
+        model=model_frozen,
+        build_trainer_fn=build_trainer_frozen,
+        output_dir="./results/frozen_model",
+        train_dataset=train_dataset,
+        test_dataset=test_dataset,
+        id2label=id2label,
     )
-    trainer.train()
 
-    # ── 9. Evaluate ──────────────────────────────────────────────
-    run_evaluation(trainer, test_dataset, id2label)
+    # ── 8. Experiment B: LoRA ────────────────────────────────────
+    print("\n" + "="*50)
+    print("EXPERIMENT B: LoRA")
+    print("="*50)
+    model_lora = get_model(label2id, id2label)
+    run_experiment(
+        model=model_lora,
+        build_trainer_fn=build_trainer_lora,
+        output_dir="./results/lora_model",
+        train_dataset=train_dataset,
+        test_dataset=test_dataset,
+        id2label=id2label,
+    )
 
-    # ── 10. Save ─────────────────────────────────────────────────
-    model.save_pretrained('./results/final_model')
-    print("Model saved to ./results/final_model")
 
 if __name__ == "__main__":
     main()
