@@ -11,6 +11,7 @@ from sklearn.metrics import (
 from torch.nn.functional import cross_entropy
 from config import MODEL_NAME
 
+# !!!! the proper labels need still to be created in the new dataset
 # # predict_and_evaluate_new_data.py
 # # Loads a new Excel dataset, maps labels to the training scheme,
 # # runs predictions with both the frozen and LoRA models,
