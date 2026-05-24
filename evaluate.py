@@ -14,6 +14,6 @@ def run_evaluation(trainer, test_dataset, id2label):
     print(classification_report(
         labels,
         preds,
-        labels=present_labels,       # ← tell sklearn which labels to expect
-        target_names=target_names,   # ← only names for present labels
+        labels=present_labels,
+        target_names=target_names,
     ))
