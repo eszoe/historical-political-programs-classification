@@ -1,12 +1,19 @@
-import numpy as np
 from sklearn.metrics import classification_report
+import numpy as np
 
 def run_evaluation(trainer, test_dataset, id2label):
     predictions = trainer.predict(test_dataset)
-    preds  = np.argmax(predictions.predictions, axis=-1)
-    labels = predictions.label_ids
+    logits      = predictions.predictions
+    labels      = predictions.label_ids
+    preds       = np.argmax(logits, axis=-1)
 
-    unique_labels = [id2label[i] for i in sorted(id2label.keys())]
-    print(classification_report(labels, preds, target_names=unique_labels))
+    # Only use labels that actually appear in the test set
+    present_labels = sorted(set(labels.tolist()))
+    target_names   = [id2label[i] for i in present_labels]
 
-    return preds, labels
+    print(classification_report(
+        labels,
+        preds,
+        labels=present_labels,       # ← tell sklearn which labels to expect
+        target_names=target_names,   # ← only names for present labels
+    ))
