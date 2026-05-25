@@ -1,3 +1,6 @@
+import random
+import numpy as np
+import torch
 from pathlib import Path
 from data_prep_load import load_corpus
 from data_prep_recode import recode_corpus
@@ -11,6 +14,11 @@ from evaluate import run_evaluation
 
 DATA_DIR = Path('data')
 
+def set_seed(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 
 def run_experiment(model, build_trainer_fn, output_dir, train_dataset, test_dataset, id2label):
     trainer = build_trainer_fn(model, train_dataset, test_dataset, compute_metrics)
@@ -21,6 +29,8 @@ def run_experiment(model, build_trainer_fn, output_dir, train_dataset, test_data
 
 
 def main():
+    set_seed(42)
+    
     # ── 1. Load and recode ───────────────────────────────────────
     corpus     = load_corpus(DATA_DIR)
     corpus_rec = recode_corpus(corpus)
