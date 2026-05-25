@@ -17,6 +17,15 @@ As our training corpus, we use the Habsburg Manifesto Dataset, which contains el
 ### 2) Setting up train and test datasets
 - dataset split at the level of documents (not sentences, to avoid data leakage) for each of the two languages evenly
 
+# Setup
+
+1. Create a GitHub personal access token (Settings → Developer Settings → Personal Access Tokens)
+2. Open the HMD_DL_Project.ipynb notebook in Google Colab
+3. Click the 🔑 Secrets icon in the left sidebar
+4. Add a secret named GITHUB_TOKEN with your token as the value
+5. Runtime → Change runtime type → select GPU
+6. Run all cells in order
+
 # References
 Burst, T., Lehmann, P., Franzmann, S., Al-Gaddooa, D., Ivanusch, C., Regel, S., Riethmüller, F., Weßels, B. and Zehnter, L., 2023. Manifestoberta (Version 56topics. sentence. 2023.1. 1).
 
