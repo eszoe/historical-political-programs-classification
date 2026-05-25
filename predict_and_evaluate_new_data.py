@@ -110,7 +110,7 @@ def load_lora_model(model_dir="./results/lora_model"):
 # ── Main ─────────────────────────────────────────────────────────
 def main():
     # ── 1. Load new data ─────────────────────────────────────────
-    df    = pd.read_excel("new_data.xlsx")
+    df    = pd.read_excel("data/new_data.xlsx")
     texts = df["sentence"].tolist()    # adjust if column name differs
 
     # ── 2. Load label2id from saved frozen model config ──────────
