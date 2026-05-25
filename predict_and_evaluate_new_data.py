@@ -101,6 +101,7 @@ def load_lora_model(model_dir="./results/lora_model"):
     tokenizer  = AutoTokenizer.from_pretrained(MODEL_NAME)
     base_model = AutoModelForSequenceClassification.from_pretrained(
         MODEL_NAME,
+        num_labels=26,
         ignore_mismatched_sizes=True,
     )
     model = PeftModel.from_pretrained(base_model, model_dir)
