@@ -11,8 +11,6 @@ from sklearn.metrics import (
 from torch.nn.functional import cross_entropy
 from config import MODEL_NAME
 
-# !!!! the proper labels need still to be created in the new dataset
-# # predict_and_evaluate_new_data.py
 # # Loads a new Excel dataset, maps labels to the training scheme,
 # # runs predictions with both the frozen and LoRA models,
 # # and evaluates performance metrics on the new data.
@@ -146,20 +144,6 @@ def main():
     # ── 6. Evaluate both models ──────────────────────────────────
     metrics_frozen = evaluate(true_labels, preds_frozen, probs_frozen, model_name="frozen")
     metrics_lora   = evaluate(true_labels, preds_lora,   probs_lora,   model_name="lora")
-
-    # ── 7. Save metrics comparison ───────────────────────────────
-    metrics_df = pd.DataFrame([metrics_frozen, metrics_lora])
-    metrics_df.to_excel("new_data_metrics.xlsx", index=False)
-    print("\nMetrics saved to new_data_metrics.xlsx")
-
-    # ── 8. Add predictions to dataframe and save ─────────────────
-    df["pred_frozen"]       = [id2label[p] for p in preds_frozen]
-    df["pred_lora"]         = [id2label[p] for p in preds_lora]
-    df["confidence_frozen"] = [round(max(p), 4) for p in probs_frozen]
-    df["confidence_lora"]   = [round(max(p), 4) for p in probs_lora]
-
-    df.to_excel("new_data_predictions.xlsx", index=False)
-    print("Predictions saved to new_data_predictions.xlsx")
 
 
 if __name__ == "__main__":
