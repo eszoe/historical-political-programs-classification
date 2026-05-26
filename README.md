@@ -49,7 +49,7 @@ Furthermore, we also probed the model's transferability by applying it to histor
 
 # Sources
 XLM-RoBERTa:
-Conneau, A., Khandelwal, K., Goyal, N., Chaudhary, V., Wenzek, G., Guzmán, F., Grave, E., Ott, M., Zettlemoyer, L. and Stoyanov, V.,     2020, July. Unsupervised cross-lingual representation learning at scale. In Proceedings of the 58th annual meeting of the              association for computational linguistics, pp. 8440-8451. 
+Conneau, A., Khandelwal, K., Goyal, N., Chaudhary, V., Wenzek, G., Guzmán, F., Grave, E., Ott, M., Zettlemoyer, L. and Stoyanov, V., 2020, July. Unsupervised cross-lingual representation learning at scale. In Proceedings of the 58th annual meeting of the association for computational linguistics, pp. 8440-8451. 
 
 ManifestoBERTa: 
 Burst, T., Lehmann, P., Franzmann, S., Al-Gaddooa, D., Ivanusch, C., Regel, S., Riethmüller, F., Weßels, B. and Zehnter, L., 2023. Manifestoberta (Version 56topics. sentence. 2023.1.1). 
