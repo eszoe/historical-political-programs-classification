@@ -6,10 +6,14 @@ MODEL_NAME = (
 LORA_CONFIG = {
     "r": 8,
     "lora_alpha": 16,
-    "lora_dropout": 0.2,
+    "lora_dropout": 0.2, # applied to the LoRA adapter matrices
     "target_modules": ["query", "value"],
     "bias": "none",
 }
+
+#  Learning rates: Learning rate of the partially frozen model is between full fine-tuning (2e-5) and LoRA (3e-4).
+#  The unfrozen layers are pretrained weights so they don't need as high a rate as LoRA adapters,
+#  but they need more than full fine-tuning since fewer layers share the learning burden.
 
 TRAINING_CONFIG_LORA = {
     "num_train_epochs": 10,
@@ -27,9 +31,6 @@ TRAINING_CONFIG_FROZEN = {
     "num_train_epochs": 10,
     "per_device_train_batch_size": 8,
     "per_device_eval_batch_size": 8,
-    # between full fine-tuning (2e-5) and LoRA (3e-4). The unfrozen layers are pretrained weights
-    # so they don't need as high a rate as LoRA adapters,
-    # but they need more than full fine-tuning since fewer layers share the learning burden.
     "learning_rate": 5e-5,
     "weight_decay": 0.01,
     "warmup_ratio": 0.1,
